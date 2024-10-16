@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css'
-import LoginForm from './features/login'
+import { LoginForm } from './features/auth/login-form';
 import RegisterForm from './features/register';
 function App() {
   const [isLogin, setIsLogin] = useState(true);
@@ -16,7 +16,7 @@ function App() {
     <div className="App">
       <h1>{isLogin}</h1>
       {isLogin ? (
-        <LoginForm onSwitchToRegister={handleSwitchToRegister} />
+        <LoginForm onSuccess={handleSwitchToRegister} />
       ) : (
         <RegisterForm onSwitchToLogin={handleSwitchToLogin} />
       )}
