@@ -1,14 +1,14 @@
 import { Link, useSearchParams } from 'react-router-dom';
-import { useLogin } from '../../hook/useLogin';
+// import { useLogin } from '../../hook/useLogin';
 import { Form } from '../../components/ui/form';
 import { Input } from '../../components/ui/input';
-
+import { useLogin } from '../../lib/auth';
 type LoginFormProps = {
 	onSuccess: () => void,
 }
 
 export const LoginForm = ({ onSuccess }: LoginFormProps) => {
-	const login = useLogin(onSuccess);
+	const login = useLogin({onSuccess});
 	const [searchParams] = useSearchParams();
 	const redirectTo = searchParams.get('redirectTo');
 

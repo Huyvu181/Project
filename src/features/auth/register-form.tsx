@@ -54,6 +54,16 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
 					</>
 				)}
 			</Form>
+			<div className="mt-2 flex items-center justify-end">
+				<div className=" text-sm">
+					<Link
+						to={`auth/register${redirectTo ? `redirectTo=${encodeURIComponent(redirectTo)}` : ''}`}
+						className="font-medium text-blue-400"
+					>
+						Login
+					</Link>
+				</div>
+			</div>
 		</div>
 	);
 }
