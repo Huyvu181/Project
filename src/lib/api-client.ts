@@ -1,32 +1,34 @@
 import Axios, { InternalAxiosRequestConfig } from 'axios';
-
-import { useNotifications } from '@/components/ui/notifications';
 import { env } from '../config/env';
+import { useNotifications } from '../notigications/notifications-store';
 
 function authRequestInterceptor(config: InternalAxiosRequestConfig) {
   if (config.headers) {
-    config.headers.Accept = 'application/json';
+    config.headers.Accept = 'application/json'
   }
 
-  config.withCredentials = true;
-  return config;
+  config.withCredentials = false; 
+
+  return config
 }
 
 export const api = Axios.create({
-  baseURL: env.API_URL,
-});
+  baseURL:env.API_URL,
+})
 
-api.interceptors.request.use(authRequestInterceptor);
-api.interceptors.response.use(
-  (response) => {
-    return response.data;
+api.interceptors.request.use(authRequestInterceptor)
+
+api.interceptors.response.use (
+  (respone) => {
+    return respone.data
   },
+
   (error) => {
-    const message = error.response?.data?.message || error.message;
+    const message = error.respone?.data ?.message || error.message
     useNotifications.getState().addNotification({
       type: 'error',
       title: 'Error',
-      message,
+      message,  // Hiển thị thông báo lỗi trong UI
     });
 
     if (error.response?.status === 401) {
@@ -36,5 +38,5 @@ api.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  },
-);
+  }
+)

@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { RegisterForm } from './auth/register-form';
+import { RegisterForm } from './register-form';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 export const RegisterRoute = () => {
