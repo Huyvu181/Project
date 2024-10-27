@@ -12,7 +12,7 @@ body {
   box-sizing: border-box;
 } */
 
-.login-form {
+/* .login-form {
   display: flex;
   flex-direction: column;
   width: 300px;
@@ -65,7 +65,7 @@ body {
 }
 
 /* Register */
-.register-form {
+/* .register-form {
   display: flex;
   flex-direction: column;
   width: 300px; 
@@ -115,4 +115,4 @@ body {
 .login-link{
   text-decoration: none;
   text-align: center;
-}
+}  */

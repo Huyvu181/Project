@@ -14,7 +14,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
 
 
 	return (
-		<div>
+		<div className="flex flex-col justify-center items-center h-screen">
 			<Form onSubmit={(values) => login.mutate(values)}>
 				{({ register, formState }) => (
 					<>

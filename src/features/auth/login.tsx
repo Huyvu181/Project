@@ -10,7 +10,7 @@ export const LoginRoute = () => {
 
 		<LoginForm
 			onSuccess={() =>
-				navigate(`${redirectTo ? `${redirectTo}` : '/app'}`, {
+				navigate(`${redirectTo ? `${redirectTo}` : '/layouts'}`, {
 					replace: true,
 				})
 			}

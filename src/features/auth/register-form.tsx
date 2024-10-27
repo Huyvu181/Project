@@ -22,14 +22,14 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
 	const redirectTo = searchParams.get('redirectTo');
 
 	return (
-		<div>
+		<div  className="flex flex-col justify-center items-center h-screen">
 			<Form
 				onSubmit={handleSubmit((values) => {
 					registering.mutate(values);
 				})}
 			>
 				{() => (
-					<>
+					<div className="flex flex-col w-full max-w-md">
 						<Input
 							type="email"
 							label="Email Address"
@@ -51,14 +51,17 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
 								validate: (value) => value === passwordValue || 'Passwords do not match',
 							})}
 						/>
-					</>
+						<div>
+							<button type="submit">Register</button>
+						</div>
+					</div>
 				)}
 			</Form>
 			<div className="mt-2 flex items-center justify-end">
 				<div className=" text-sm">
 					<Link
-						to={`auth/register${redirectTo ? `redirectTo=${encodeURIComponent(redirectTo)}` : ''}`}
-						className="font-medium text-blue-400"
+						to={`/auth/login${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`}
+						className="font-medium text-blue-600 hover:text-blue-500"
 					>
 						Login
 					</Link>
