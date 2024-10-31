@@ -1,36 +1,36 @@
-import React, { ErrorInfo } from 'react';
+// import React, { ErrorInfo } from 'react';
 
-interface Props {
-  children: React.ReactNode;
-}
+// interface Props {
+//   children: React.ReactNode;
+// }
 
-interface State {
-  hasError: boolean;
-}
+// interface State {
+//   hasError: boolean;
+// }
 
-class ErrorBoundary extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props);
-    this.state = { hasError: false };
-  }
+// class ErrorBoundary extends React.Component<Props, State> {
+//   constructor(props: Props) {
+//     super(props);
+//     this.state = { hasError: false };
+//   }
 
-  static getDerivedStateFromError(error: Error) {
-    
-    return { hasError: true };
-  }
+//   static getDerivedStateFromError(error: Error) {
 
-  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    
-    console.error("Error caught in ErrorBoundary: ", error, errorInfo);
-  }
+//     return { hasError: true };
+//   }
 
-  render() {
-    if (this.state.hasError) {
-      return <h1>Đã xảy ra lỗi. Vui lòng thử lại sau.</h1>;
-    }
+//   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
 
-    return this.props.children; 
-  }
-}
+//     console.error("Error caught in ErrorBoundary: ", error, errorInfo);
+//   }
 
-export default ErrorBoundary;
+//   render() {
+//     if (this.state.hasError) {
+//       return <h1>Error</h1>;
+//     }
+
+//     return this.props.children;
+//   }
+// }
+
+// export default ErrorBoundary;

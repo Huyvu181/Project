@@ -3,7 +3,7 @@ import './App.css';
 import { LoginForm } from './features/auth/login-form';
 import { RegisterForm } from './features/auth/register-form';
 import { Dashboard } from './components/layouts/dashboard-layout';
-import ErrorBoundary from './components/ErrorBoundary.tsx';
+// import ErrorBoundary from './components/ErrorBoundary.tsx';
 import NotFound from './components/NotFound.tsx';
 
 
@@ -57,10 +57,10 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <ErrorBoundary>
+    <>
       <RouterProvider router={router} />;
       <TestForm/>
-    </ErrorBoundary>
+    </>
   )
 
 

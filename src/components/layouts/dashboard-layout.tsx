@@ -1,6 +1,10 @@
+import { Navbar } from "../navbar/Navbar"
 export function Dashboard() {
 	return (
-		<h1>Dashboardlayout</h1>
+		<>
+			<Navbar />
+			<h1>Dashboard layout</h1>
+		</>
 	)
 }
 
