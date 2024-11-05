@@ -1,17 +1,28 @@
 import React from 'react';
-import { useForm, UseFormReturn } from 'react-hook-form';
+import { useForm, UseFormReturn, FieldValues, SubmitHandler } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 
-type FormProps = {
-  onSubmit: (values: any) => void;
-  children: (methods: UseFormReturn) => React.ReactNode;
-  schema?: any;  
+type FormProps<TFieldValues extends FieldValues> = {
+  onSubmit: SubmitHandler<TFieldValues>;
+  children: (methods: UseFormReturn<TFieldValues>) => React.ReactNode;
+  schema?: z.ZodType<TFieldValues>;
+  className?: string;
 };
 
-export const Form = ({ onSubmit, children, schema }: FormProps) => {
-  const methods = useForm({ mode: 'onSubmit' });  
+export const Form = <TFieldValues extends FieldValues>({
+  onSubmit,
+  children,
+  schema,
+  className,
+}: FormProps<TFieldValues>) => {
+  const methods = useForm<TFieldValues>({
+    mode: 'onSubmit',
+    resolver: schema ? zodResolver(schema) : undefined,
+  });
 
   return (
-    <form onSubmit={methods.handleSubmit(onSubmit)}>
+    <form onSubmit={methods.handleSubmit(onSubmit)} className={className}>
       {children(methods)}
     </form>
   );

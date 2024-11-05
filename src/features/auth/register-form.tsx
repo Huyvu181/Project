@@ -7,61 +7,71 @@ import { useRegister, registerInputSchema } from '../../lib/auth';
 
 type RegisterFormProps = {
 	onSuccess: () => void;
-
-}
+};
 
 export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
 	const { register, handleSubmit, formState, watch } = useForm({
-		resolver: zodResolver(registerInputSchema), // Sử dụng zod để validate form
+		resolver: zodResolver(registerInputSchema),
 		shouldUnregister: true,
 	});
 
-	const passwordValue = watch('password'); // Lấy giá trị của trường password
+	const passwordValue = watch('password');
 	const registering = useRegister({ onSuccess });
 	const [searchParams] = useSearchParams();
 	const redirectTo = searchParams.get('redirectTo');
 
 	return (
-		<div  className="flex flex-col justify-center items-center h-screen">
-			<Form
-				onSubmit={handleSubmit((values) => {
-					registering.mutate(values);
-				})}
-			>
-				{() => (
-					<div className="flex flex-col w-full max-w-md">
-						<Input
-							type="email"
-							label="Email Address"
-							error={formState.errors['email']?.message as string | undefined}
-							registration={register('email', { required: 'Email is required' })}
-						/>
-						<Input
-							type="password"
-							label="Password"
-							error={formState.errors['password']?.message as string | undefined}
-							registration={register('password', { required: 'Password is required' })}
-						/>
-						<Input
-							type="password"
-							label="Confirm Password"
-							error={formState.errors['confirmPassword']?.message as string | undefined}
-							registration={register('confirmPassword', {
-								required: 'Confirm password is required',
-								validate: (value) => value === passwordValue || 'Passwords do not match',
-							})}
-						/>
-						<div>
-							<button type="submit">Register</button>
+		<div className="flex items-center justify-center min-h-screen bg-gray-100">
+			<div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+				<h2 className="text-2xl font-bold text-center mb-6">Create an Account</h2>
+
+				<Form
+					onSubmit={handleSubmit((values) => {
+						registering.mutate(values);
+					})}
+				>
+					{() => (
+						<div className="space-y-4">
+							<Input
+								type="email"
+								label="Email Address"
+								error={formState.errors['email']?.message as string | undefined}
+								registration={register('email', { required: 'Email is required' })}
+								className="w-full"
+							/>
+							<Input
+								type="password"
+								label="Password"
+								error={formState.errors['password']?.message as string | undefined}
+								registration={register('password', { required: 'Password is required' })}
+								className="w-full"
+							/>
+							<Input
+								type="password"
+								label="Confirm Password"
+								error={formState.errors['confirmPassword']?.message as string | undefined}
+								registration={register('confirmPassword', {
+									required: 'Confirm password is required',
+									validate: (value) => value === passwordValue || 'Passwords do not match',
+								})}
+								className="w-full"
+							/>
+
+							<button
+								type="submit"
+								className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700"
+							>
+								Register
+							</button>
 						</div>
-					</div>
-				)}
-			</Form>
-			<div className="mt-2 flex items-center justify-end">
-				<div className=" text-sm">
+					)}
+				</Form>
+
+				<div className="mt-4 text-center">
 					<Link
 						to={`/auth/login${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`}
-						className="font-medium text-blue-600 hover:text-blue-500"
+						className="text-blue-600 hover:text-blue-500"
+						style={{ textDecoration: 'none' }}
 					>
 						Login
 					</Link>
@@ -69,4 +79,4 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
 			</div>
 		</div>
 	);
-}
+};
