@@ -8,15 +8,15 @@ import NotFound from './components/NotFound.tsx';
 
 
 const TestForm = () => {
-	return (
-		<div className="form-container">
-			<form>
-				<input type="text" placeholder="Email" />
-				<input type="password" placeholder="Password" />
-				<button type="submit">Submit</button>
-			</form>
-		</div>
-	);
+  return (
+    <div className="form-container">
+      <form>
+        <input type="text" placeholder="Email" />
+        <input type="password" placeholder="Password" />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  );
 };
 
 
@@ -59,10 +59,9 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
-      
+
     </>
   )
-
 
 }
 

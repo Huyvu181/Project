@@ -10,7 +10,7 @@ type RegisterFormProps = {
 };
 
 export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
-	const { register, handleSubmit, formState, watch } = useForm({
+	const { register, formState, watch } = useForm({
 		resolver: zodResolver(registerInputSchema),
 		shouldUnregister: true,
 	});
@@ -26,7 +26,7 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
 				<h2 className="text-2xl font-bold text-center mb-6">Create an Account</h2>
 
 				<Form
-					onSubmit={handleSubmit((values) => {
+					onSubmit={((values) => {
 						registering.mutate(values);
 					})}
 				>
