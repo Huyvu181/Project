@@ -11,7 +11,7 @@ type InputProps = {
 export const Input = ({ label, type, error, registration, className }: InputProps) => {
   return (
     <div className={`flex items-center mb-4 ${className}`}>
-      <label className="w-32 text-sm font-medium text-gray-700">{label}</label> {/* Đặt độ rộng cố định cho label */}
+      <label className="w-32 text-sm font-medium text-gray-700">{label}</label> 
       <div className="flex-1">
         <input
           type={type}

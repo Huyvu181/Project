@@ -1,4 +1,4 @@
-import { Navbar } from "../navbar/Navbar"
+import { Navbar } from "../../app/navbar/Navbar"
 export function Dashboard() {
 	return (
 		<>
