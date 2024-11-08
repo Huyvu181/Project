@@ -26,11 +26,9 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
 				<h2 className="text-2xl font-bold text-center mb-6">Create an Account</h2>
 
 				<Form
-					onSubmit={((values) => {
-						registering.mutate(values);
-					})}
+					onSubmit={((values) => { registering.mutate(values) })}
 				>
-					{() => (
+					{({ register, formState, watch }) => (
 						<div className="space-y-4">
 							<Input
 								type="first name"
