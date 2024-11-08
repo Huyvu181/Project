@@ -1,0 +1,15 @@
+.navbarItem {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.profileLink {
+	color: rgb(4, 4, 6);
+	text-decoration: none;
+	padding: 0px 7px
+}
+
+.profileLink:hover {
+	color: gray;
+}

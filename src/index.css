@@ -19,6 +19,7 @@ body {
   justify-content: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #f2f4f7;
 }
 
 button {
@@ -28,7 +29,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #6b7aea;
+  background-color: #0866ff;
   cursor: pointer;
   transition: border-color 0.25s;
 }

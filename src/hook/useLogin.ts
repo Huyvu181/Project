@@ -1,6 +1,6 @@
-  import { useMutation } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 
-async function loginUser(values: { email: string; password: string }) : Promise<any>{
+async function loginUser(values: { email: string; password: string }): Promise<any> {
   const response = await fetch('/api/login', {
     method: 'POST',
     headers: {
@@ -18,8 +18,8 @@ async function loginUser(values: { email: string; password: string }) : Promise<
 
 
 export function useLogin(onSuccess: () => void) {
-	return useMutation({
-	  mutationFn: loginUser, 
-	  onSuccess,            
-	});
-  }
+  return useMutation({
+    mutationFn: loginUser,
+    onSuccess,
+  });
+}

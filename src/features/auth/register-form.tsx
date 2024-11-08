@@ -21,8 +21,8 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
 	const redirectTo = searchParams.get('redirectTo');
 
 	return (
-		<div className="flex items-center justify-center min-h-screen bg-gray-100">
-			<div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+		<div className="flex items-center justify-center min-h-screen bg-gray-100" >
+			<div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md " id='Registerform'>
 				<h2 className="text-2xl font-bold text-center mb-6">Create an Account</h2>
 
 				<Form
@@ -33,22 +33,36 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
 					{() => (
 						<div className="space-y-4">
 							<Input
+								type="first name"
+								placeholder='First Name'
+								error={formState.errors['first name']?.message as string | undefined}
+								registration={register('first name', { required: 'First Name is required' })}
+								className="w-full"
+							/>
+							<Input
+								type="last name"
+								placeholder='Last Name'
+								error={formState.errors['last name']?.message as string | undefined}
+								registration={register('last name', { required: 'Last Name is required' })}
+								className="w-full"
+							/>
+							<Input
 								type="email"
-								label="Email Address"
+								placeholder='Email Address'
 								error={formState.errors['email']?.message as string | undefined}
 								registration={register('email', { required: 'Email is required' })}
 								className="w-full"
 							/>
 							<Input
 								type="password"
-								label="Password"
+								placeholder='Password'
 								error={formState.errors['password']?.message as string | undefined}
 								registration={register('password', { required: 'Password is required' })}
 								className="w-full"
 							/>
 							<Input
 								type="password"
-								label="Confirm Password"
+								placeholder='Confirm Password'
 								error={formState.errors['confirmPassword']?.message as string | undefined}
 								registration={register('confirmPassword', {
 									required: 'Confirm password is required',
@@ -59,7 +73,8 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
 
 							<button
 								type="submit"
-								className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700"
+								className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition"
+								style={{ background: "#00a400", color: "#fff" }}
 							>
 								Register
 							</button>
@@ -67,10 +82,12 @@ export const RegisterForm = ({ onSuccess }: RegisterFormProps) => {
 					)}
 				</Form>
 
-				<div className="mt-4 text-center">
+				<div className='border-t border-gray-300 my-4'></div>
+
+				<div className="mt-4 text-center bg-blue-500 rounded-lg py-1 hover:text-slate-50 transition cursor-pointer">
 					<Link
 						to={`/auth/login${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`}
-						className="text-blue-600 hover:text-blue-500"
+						className=" hover:text-slate-50 transition"
 						style={{ textDecoration: 'none' }}
 					>
 						Login
