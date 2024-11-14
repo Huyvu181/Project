@@ -1,10 +1,11 @@
-import React, { useState, ReactNode } from 'react';
+import React, { useState } from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
 
 type InputProps = {
   placeholder: string;
   type: string;
   error?: string;
-  registration: any;
+  registration: UseFormRegisterReturn;
   className?: string;
 
 };
@@ -48,6 +49,8 @@ export const Input = ({ placeholder, type, error, registration, className }: Inp
     </div>
   );
 };
+
+
 
 
 

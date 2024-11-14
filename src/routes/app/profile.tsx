@@ -16,7 +16,7 @@ const Entry = ({ label, value }: EntryProps) => {
 
 export const ProfileRoute = () => {
 	const user = useUser()
-	const displayUser : { email: string, firstname: string }  = {
+	const displayUser: { email: string, firstname: string } = {
 		email: "test@example.com",
 		firstname: "John Doe"
 	};
@@ -25,16 +25,16 @@ export const ProfileRoute = () => {
 		return <p>Loading...</p>;
 	}
 
-
 	return (
 		<>
 			<ContentLayout title="Profile" >
 				<div className="overflow-hidden bg-white shadow sm:rounded-lg" >
 					<div className="px-4 py-5 sm:px-6" id="Profile">
-						<div className="flex justify-between">
+						<div className="flex flex-col">
 							<h3 className="text-lg font-medium leading-6 text-gray-900">
 								User Information
 							</h3>
+
 							<p className="mt-1 max-w-2xl text-sm text-gray-500">
 								Personal details of the user.
 							</p>

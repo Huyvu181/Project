@@ -1,25 +1,28 @@
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Form } from '../../components/ui/form';
 import { Input } from '../../components/ui/input';
-import { useLogin } from '../../lib/auth';
+import { loginFn, LoginInput, useLogin } from '../../lib/auth';
+import { useSearchParams } from 'react-router-dom';
 
 type LoginFormProps = {
-	onSuccess: () => void,
+	onSuccess: () => void;
 }
 
 export const LoginForm = ({ onSuccess }: LoginFormProps) => {
-	const login = useLogin({ onSuccess });
+	const login = useLogin({ onSuccess, onError: (e) => { console.log('on error', e) } });
 	const [searchParams] = useSearchParams();
 	const redirectTo = searchParams.get('redirectTo');
+	const navigate = useNavigate();
+
 
 	return (
-		<div className="flex items-center justify-center min-h-screen overflow-hidden " >
-			<div className=" bg-gray-100 p-8 rounded-lg shadow-md w-full max-w-md " id='Loginform'>
+		<div className="flex items-center justify-center min-h-screen overflow-hidden">
+			<div className="bg-gray-100 p-8 rounded-lg shadow-md w-full max-w-md" id="Loginform">
 				<h2 className="text-center text-2xl font-bold mb-6">Log in to your account</h2>
-				<Form onSubmit={(values) => login.mutate(values)}>
+				<Form onSubmit={(values) => login.mutate(values, navigate)}>
 					{({ register, formState }) => (
 						<>
-							<div className="mb-4 ">
+							<div className="mb-4">
 								<Input
 									type="email"
 									placeholder="Email Address"
@@ -39,7 +42,7 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
 							</div>
 							<button
 								type="submit"
-								className="w-full text-white py-2  rounded hover:bg-gray-800 transition"
+								className="w-full text-white py-2 rounded hover:bg-gray-800 transition"
 							>
 								Log in
 							</button>
@@ -47,12 +50,12 @@ export const LoginForm = ({ onSuccess }: LoginFormProps) => {
 					)}
 				</Form>
 
-				<div className='border-t border-gray-300 my-4'></div>
+				<div className="border-t border-gray-300 my-4"></div>
 
 				<div className="mt-4 text-center rounded-lg py-1 hover:text-slate-50 transition cursor-pointer" style={{ background: "#00a400" }}>
 					<Link
 						to={`/auth/register${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`}
-						className=" hover:text-slate-50 transition"
+						className="hover:text-slate-50 transition"
 						style={{ textDecoration: 'none' }}
 					>
 						Register

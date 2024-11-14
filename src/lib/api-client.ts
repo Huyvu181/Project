@@ -31,11 +31,11 @@ api.interceptors.response.use (
       message,  // Hiển thị thông báo lỗi trong UI
     });
 
-    if (error.response?.status === 401) {
-      const searchParams = new URLSearchParams();
-      const redirectTo = searchParams.get('redirectTo');
-      window.location.href = `/auth/login?redirectTo=${redirectTo}`;
-    }
+    // if (error.response?.status === 401) {
+    //   const searchParams = new URLSearchParams();
+    //   const redirectTo = searchParams.get('redirectTo');
+    //   window.location.href = `/auth/login?redirectTo=${redirectTo}`;
+    // }
 
     return Promise.reject(error);
   }

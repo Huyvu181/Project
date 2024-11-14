@@ -1,7 +1,7 @@
 import { configureAuth } from 'react-query-auth';
 import { Navigate, useLocation } from 'react-router-dom';
 import { z } from 'zod';
-
+import { useNavigate } from 'react-router-dom';
 import { AuthResponse, User } from '../type/api';
 
 import { api } from './api-client';
@@ -26,38 +26,55 @@ export const loginInputSchema = z.object({
 
 export type LoginInput = z.infer<typeof loginInputSchema>;
 const loginWithEmailAndPassword = (data: LoginInput): Promise<AuthResponse> => {
-  return api.post('/auth/login', data);
+  return api.post('http://localhost:3000/auth/login', data);
 };
 
-export const registerInputSchema = z
-  .object({
-    email: z.string().min(1, 'Required'),
-    firstName: z.string().min(1, 'Required'),
-    lastName: z.string().min(1, 'Required'),
-    password: z.string().min(1, 'Required'),
-  })
-  .and(
-    z
-      .object({
-        teamId: z.string().min(1, 'Required'),
-        teamName: z.null().default(null),
-      }),
-  );
+
+const baseSchema = z.object({
+  email: z.string().min(1, 'Required'),
+  firstname: z.string().min(1, 'Required'),
+  lastname: z.string().min(1, 'Required'),
+  password: z.string().min(1, 'Required'),
+  confirmPassword: z.string().min(1, 'Required'),
+});
+
+export const registerInputSchema = baseSchema.superRefine((data, ctx) => {
+  if (data.password !== data.confirmPassword) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: 'Passwords do not match',
+      path: ['confirmPassword'],
+    });
+  }
+});
 
 export type RegisterInput = z.infer<typeof registerInputSchema>;
 
-const registerWithEmailAndPassword = (
-  data: RegisterInput,
-): Promise<AuthResponse> => {
-  return api.post('/auth/register', data);
+
+
+const registerWithEmailAndPassword = (data: RegisterInput): Promise<AuthResponse> => {
+
+  const { email, firstname, lastname, password } = data;
+
+  // console.log({ firstname, lastname, email, password });
+
+  return api.post('http://localhost:3000/auth/register', { email, firstname, lastname, password });
 };
+
+//
+export const loginFn = async (data: LoginInput) => {
+  const response = await loginWithEmailAndPassword(data);
+  if (response.user) {
+    return response.user;
+  }
+
+  throw new Error("Login failed");
+};
+
 
 const authConfig = {
   userFn: getUser,
-  loginFn: async (data: LoginInput) => {
-    const response = await loginWithEmailAndPassword(data);
-    return response.user;
-  },
+  loginFn,
   registerFn: async (data: RegisterInput) => {
     const response = await registerWithEmailAndPassword(data);
     return response.user;
