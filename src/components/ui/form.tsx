@@ -22,11 +22,7 @@ export const Form = <TFieldValues extends FieldValues>({
   });
 
   return (
-    <form onSubmit={(e) => {
-      console.log("e",e)
-      e.preventDefault();
-      methods.handleSubmit(onSubmit)(e);
-    }} className={className}>
+    <form onSubmit={methods.handleSubmit(onSubmit)} className={className}>
       {children(methods)}
     </form>
   );

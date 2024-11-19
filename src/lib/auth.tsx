@@ -1,9 +1,8 @@
 import { configureAuth } from 'react-query-auth';
 import { Navigate, useLocation } from 'react-router-dom';
 import { z } from 'zod';
-import { useNavigate } from 'react-router-dom';
 import { AuthResponse, User } from '../type/api';
-
+import axios from 'axios';
 import { api } from './api-client';
 
 // api call definitions for auth (types, schemas, requests):
@@ -26,6 +25,7 @@ export const loginInputSchema = z.object({
 
 export type LoginInput = z.infer<typeof loginInputSchema>;
 const loginWithEmailAndPassword = (data: LoginInput): Promise<AuthResponse> => {
+  console.log('Data sent to server:', data);
   return api.post('http://localhost:3000/auth/login', data);
 };
 
@@ -56,21 +56,26 @@ const registerWithEmailAndPassword = (data: RegisterInput): Promise<AuthResponse
 
   const { email, firstname, lastname, password } = data;
 
-  // console.log({ firstname, lastname, email, password });
+  console.log({ firstname, lastname, email, password });
 
   return api.post('http://localhost:3000/auth/register', { email, firstname, lastname, password });
 };
 
 //
-export const loginFn = async (data: LoginInput) => {
-  const response = await loginWithEmailAndPassword(data);
-  if (response.user) {
-    return response.user;
+
+const loginFn = async (data: LoginInput) => {
+  try {
+    const response = await axios.post('http://localhost:3000/auth/login', data);
+    if (response.status === 200) {
+
+      localStorage.setItem('token', response.data.token);
+      return response.data.user;
+    }
+  } catch (error) {
+    console.error('Error during login:', error);
+    throw new Error('Invalid credentials');
   }
-
-  throw new Error("Login failed");
 };
-
 
 const authConfig = {
   userFn: getUser,

@@ -8,7 +8,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "server": "node server/server.js"
+    "server": "node server/server.js",
+    "start": "nodemon app.js"
+    
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -41,6 +43,7 @@
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.12",
     "globals": "^15.9.0",
+    "nodemon": "^3.1.7",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.14",
     "typescript": "^5.5.3",

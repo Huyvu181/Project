@@ -1,17 +1,9 @@
 import { createBrowserRouter, useNavigate } from 'react-router-dom';
-import { LoginForm } from '../features/auth/login-form';
 import { RegisterForm } from '../features/auth/register-form';
 import { Dashboard } from '../components/layouts/dashboard-layout';
 import { ProfileRoute } from './app/profile.tsx';
 import NotFound from '../components/NotFound.tsx';
-
-const LoginRoute = () => {
-	const navigate = useNavigate();
-	const handleLoginSuccess = () => navigate('/dashboard');
-
-	return <LoginForm onSuccess={handleLoginSuccess} />;
-};
-
+import { LoginRoute } from '../features/auth/login.tsx';
 
 const RegisterRoute = () => {
 	const navigate = useNavigate();

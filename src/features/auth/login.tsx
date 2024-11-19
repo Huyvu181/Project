@@ -4,11 +4,17 @@ import { LoginForm } from "./login-form";
 export const LoginRoute = () => {
 	const navigate = useNavigate();
 	const [searchParams] = useSearchParams();
-	const redirectTo = searchParams.get('redirectTo') || '/dashboard'; 
+	const redirectTo = searchParams.get('redirectTo');
 
 	return (
-		<LoginForm
-			onSuccess={() => navigate(redirectTo, { replace: true })} 
-		/>
-	);
+		<>
+		  <LoginForm
+			onSuccess={() => {
+			  navigate(`${redirectTo ? `${redirectTo}` : '/dashboard'}`, {
+				replace: true,
+			  })
+			}}
+		  />
+		</>
+	  )
 };

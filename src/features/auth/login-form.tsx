@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { Form } from '../../components/ui/form';
 import { Input } from '../../components/ui/input';
-import { loginFn, LoginInput, useLogin } from '../../lib/auth';
+import { LoginInput, useLogin } from '../../lib/auth';
 import { useSearchParams } from 'react-router-dom';
 
 type LoginFormProps = {
@@ -9,7 +9,8 @@ type LoginFormProps = {
 }
 
 export const LoginForm = ({ onSuccess }: LoginFormProps) => {
-	const login = useLogin({ onSuccess, onError: (e) => { console.log('on error', e) } });
+	// const login = useLogin({ onSuccess, onError: (e) => { console.log('on error', e) } });
+	const login = useLogin({ onSuccess });
 	const [searchParams] = useSearchParams();
 	const redirectTo = searchParams.get('redirectTo');
 	const navigate = useNavigate();

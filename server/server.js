@@ -30,64 +30,65 @@ app.listen(PORT, () => {
 	console.log(` http://localhost:${PORT}`);
 
 	// API đăng ký người dùng
-	app.post('/auth/register', async (req, res) => {
-		const { firstname, lastname, email, password } = req.body;
-
-		// Kiểm tra xem email
-		const checkEmailQuery = 'SELECT * FROM users WHERE email = ?';
-		db.query(checkEmailQuery, [email], async (err, results) => {
-			if (err) {
-				return res.status(500).json({ error: 'Error' });
-			}
-			console.log(
-				'results', results
-			)
-			if (results.length > 0) {
-				return res.status(400).json({ error: 'Email have use' });
-			}
-
-			// Mã hóa mật khẩu
-			const hashedPassword = await bcrypt.hash(password, 10);
-
-
-			const query = 'INSERT INTO users (firstname, lastname, email, password) VALUES (?, ?, ?, ?)';
-			db.query(query, [firstname, lastname, email, hashedPassword], (err, result) => {
-				if (err) {
-					return res.status(500).json({ error: 'ERROR' });
-				}
-				res.status(201).json({ message: 'SUCCESS' });
-			});
-		});
-	});
-
-	// app.post('/auth/register', (req, res) => {
+	// app.post('/auth/register', async (req, res) => {
 	// 	const { firstname, lastname, email, password } = req.body;
 
-	// 	// Kiểm tra xem email đã tồn tại chưa
+	// 	// Kiểm tra xem email
 	// 	const checkEmailQuery = 'SELECT * FROM users WHERE email = ?';
-	// 	db.query(checkEmailQuery, [email], (err, results) => {
+	// 	db.query(checkEmailQuery, [email], async (err, results) => {
 	// 		if (err) {
 	// 			return res.status(500).json({ error: 'Error' });
 	// 		}
+	// 		console.log(
+	// 			'results', results
+	// 		)
 	// 		if (results.length > 0) {
-	// 			return res.status(400).json({ error: 'Email already in use' });
+	// 			return res.status(400).json({ error: 'Email have use' });
 	// 		}
 
-	// 		// Lưu mật khẩu trực tiếp mà không mã hóa
+	// 		// Mã hóa mật khẩu
+	// 		const hashedPassword = await bcrypt.hash(password, 10);
+
+
 	// 		const query = 'INSERT INTO users (firstname, lastname, email, password) VALUES (?, ?, ?, ?)';
-	// 		db.query(query, [firstname, lastname, email, password], (err, result) => {
+	// 		db.query(query, [firstname, lastname, email, hashedPassword], (err, result) => {
 	// 			if (err) {
-	// 				return res.status(500).json({ error: 'Error saving user' });
+	// 				return res.status(500).json({ error: 'ERROR' });
 	// 			}
-	// 			res.status(201).json({ message: 'Registration successful' });
+	// 			res.status(201).json({ message: 'SUCCESS' });
 	// 		});
 	// 	});
 	// });
+
+	app.post('/auth/register', (req, res) => {
+		const { firstname, lastname, email, password } = req.body;
+
+		// Kiểm tra xem email đã tồn tại chưa
+		const checkEmailQuery = 'SELECT * FROM users WHERE email = ?';
+		db.query(checkEmailQuery, [email], (err, results) => {
+			if (err) {
+				return res.status(500).json({ error: 'Error' });
+			}
+			if (results.length > 0) {
+				return res.status(400).json({ error: 'Email already in use' });
+			}
+
+
+			const query = 'INSERT INTO users (firstname, lastname, email, password) VALUES (?, ?, ?, ?)';
+			db.query(query, [firstname, lastname, email, password], (err, result) => {
+				if (err) {
+					return res.status(500).json({ error: 'Error saving user' });
+				}
+				res.status(201).json({ message: 'Registration successful' });
+			});
+		});
+	});
 
 
 	app.get('/test', (req, res) => {
 		res.send('Hello, this is a simple test endpoint!');
 	})
+
 
 	// API đăng nhập người dùng
 	app.post('/auth/login', async (req, res) => {
@@ -95,16 +96,25 @@ app.listen(PORT, () => {
 
 		const query = 'SELECT * FROM users WHERE email = ?';
 
+		console.log('Email:', email);
+		console.log('password:', password);
+
+
 		db.query(query, [email], async (err, results) => {
-			if (err || results.length === 0) {
+
+			if (err) {
+				return res.status(500).json({ error: 'Lỗi hệ thống' });
+			}
+
+			if (results.length === 0) {
+
 				return res.status(401).json({ error: 'Thông tin đăng nhập không chính xác' });
 			}
 
 			const user = results[0];
 
 			// Kiểm tra mật khẩu
-			const isMatch = await bcrypt.compare(password, user.password);
-			if (!isMatch) {
+			if (password !== user.password) {
 				return res.status(401).json({ error: 'Thông tin đăng nhập không chính xác' });
 			}
 
@@ -113,6 +123,7 @@ app.listen(PORT, () => {
 			res.json({ message: 'Đăng nhập thành công', token });
 		});
 	});
+
 
 });
 
