@@ -1,4 +1,4 @@
-import { createBrowserRouter, useNavigate } from 'react-router-dom';
+import { createBrowserRouter, useNavigate, Navigate } from 'react-router-dom';
 import { RegisterForm } from '../features/auth/register-form';
 import { Dashboard } from '../components/layouts/dashboard-layout';
 import { ProfileRoute } from './app/profile.tsx';
@@ -14,6 +14,10 @@ const RegisterRoute = () => {
 
 
 const router = createBrowserRouter([
+	{
+		path: '/',
+		element: <Navigate to="/auth/login" replace />,
+	},
 	{
 		path: '/auth/login',
 		element: <LoginRoute />,

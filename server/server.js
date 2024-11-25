@@ -124,6 +124,19 @@ app.listen(PORT, () => {
 		});
 	});
 
+	// API lấy danh sách sản phẩm
+	app.get('/api/products', (req, res) => {
+		db.query('SELECT * FROM products', (err, results) => {
+			if (err) {
+				console.error('Error fetching products:', err);
+				return res.status(500).json({ error: 'Failed to fetch products' });
+			}
+			res.status(200).json(results);
+		});
+	});
+
+
+
 
 });
 

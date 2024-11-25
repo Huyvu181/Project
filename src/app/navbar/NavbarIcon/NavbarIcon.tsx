@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 interface NavbarIconProps {
   icon: React.ReactNode;
   to?: string;      // Đường dẫn nội bộ
-  href?: string;    // Đường dẫn bên ngoài
+  href?: string;
+
 }
 
 export function NavbarIcon({ icon, to, href }: NavbarIconProps) {

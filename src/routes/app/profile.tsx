@@ -28,8 +28,8 @@ export const ProfileRoute = () => {
 	return (
 		<>
 			<ContentLayout title="Profile" >
-				<div className="overflow-hidden bg-white shadow sm:rounded-lg" >
-					<div className="px-4 py-5 sm:px-6" id="Profile">
+				<div className=" overflow-hidden bg-white shadow sm:rounded-lg" >
+					<div className=" px-4 py-5 sm:px-6" id="Profile">
 						<div className="flex flex-col">
 							<h3 className="text-lg font-medium leading-6 text-gray-900">
 								User Information
@@ -41,7 +41,7 @@ export const ProfileRoute = () => {
 						</div>
 					</div>
 
-					<div className="border-t border-gray-200 px-4 py-5 sm:p-0" id="InforProfile">
+					<div className=" flex border-t border-gray-200 px-4 py-5 sm:p-0" id="InforProfile">
 						<dl className="sm:divide-y sm:divide-gray-200">
 							<Entry label="First Name" value={displayUser.firstname} />
 							<Entry label="Email Address" value={displayUser.email} />
