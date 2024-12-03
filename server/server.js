@@ -86,7 +86,7 @@ app.listen(PORT, () => {
 
 
 	app.get('/test', (req, res) => {
-		res.send('Hello, this is a simple test endpoint!');
+		res.send(' test endpoint!');
 	})
 
 
@@ -94,35 +94,42 @@ app.listen(PORT, () => {
 	app.post('/auth/login', async (req, res) => {
 		const { email, password } = req.body;
 
+		console.log('Email:', email);
+		console.log('Password:', password);
+
 		const query = 'SELECT * FROM users WHERE email = ?';
 
-		console.log('Email:', email);
-		console.log('password:', password);
-
-
 		db.query(query, [email], async (err, results) => {
-
 			if (err) {
-				return res.status(500).json({ error: 'Lỗi hệ thống' });
+				return res.status(500).json({ error: 'Error' });
 			}
 
 			if (results.length === 0) {
-
-				return res.status(401).json({ error: 'Thông tin đăng nhập không chính xác' });
+				return res.status(401).json({ error: 'Wrong infor' });
 			}
 
 			const user = results[0];
 
 			// Kiểm tra mật khẩu
 			if (password !== user.password) {
-				return res.status(401).json({ error: 'Thông tin đăng nhập không chính xác' });
+				return res.status(401).json({ error: 'Wrong infor' });
 			}
 
 			// Tạo token và gửi lại client
-			const token = jwt.sign({ id: user.id }, 'your_jwt_secret', { expiresIn: '1h' });
-			res.json({ message: 'Đăng nhập thành công', token });
+			const token = jwt.sign({ id: user.id }, '123123', { expiresIn: '1h' });
+			console.log('Token:', token);
+			res.json({
+				message: 'Login success',
+				token,
+				user: {
+					firstname: user.firstname,
+					lastname: user.lastname,
+					email: user.email
+				}
+			});
 		});
 	});
+
 
 	// API lấy danh sách sản phẩm
 	app.get('/api/products', (req, res) => {
@@ -135,6 +142,35 @@ app.listen(PORT, () => {
 		});
 	});
 
+	//API products detail
+	app.get('/api/products/:id', (req, res) => {
+		const { id } = req.params;
+		console.log('Received ID:', id);
+		db.query('SELECT * FROM products WHERE id = ?', [id], (err, results) => {
+			if (err) {
+				return res.status(500).json({ error: 'Database query failed' });
+			}
+			if (results.length === 0) {
+				return res.status(404).json({ message: 'Product not found' });
+			}
+			res.json(results[0]);
+		});
+	});
+
+	//API profiles detail
+	app.get('/api/user/:id', (req, res) => {
+		const { id } = req.params;
+		db.query('SELECT firstname, lastname, email FROM users WHERE email = ?', [id], (err, results) => {
+			if (err) {
+				console.error(err);
+				return res.status(500).json({ error: 'Database query failed' });
+			}
+			if (results.length === 0) {
+				return res.status(404).json({ error: 'User not found' });
+			}
+			res.status(200).json(results[0]);
+		});
+	});
 
 
 

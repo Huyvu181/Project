@@ -55,12 +55,15 @@ const registerWithEmailAndPassword = (data: RegisterInput): Promise<AuthResponse
   return api.post('http://localhost:3000/auth/register', { email, firstname, lastname, password });
 };
 
+
 // Login 
 const loginFn = async (data: LoginInput) => {
   try {
     const response = await axios.post('http://localhost:3000/auth/login', data);
+    console.log(response.data);
     if (response.status === 200) {
       localStorage.setItem('token', response.data.token);
+      localStorage.setItem('user', JSON.stringify(response.data.user)); 
       return response.data.user;
     }
   } catch (error) {
@@ -68,6 +71,9 @@ const loginFn = async (data: LoginInput) => {
     throw new Error('Invalid credentials');
   }
 };
+
+
+
 
 // Auth config for react-query-auth
 const authConfig = {

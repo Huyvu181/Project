@@ -2,11 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+@media (min-width: 769px) {
+  .TradePrice_tradePriceWrap__Sdms_ {
+    border-radius: 0.5rem;
+    border-width: 1px;
+    --tw-border-opacity: 1;
+    background: linear-gradient(
+      180deg,
+      var(--yellow-yellow-1, #fcd34d) 0%,
+      #fff 35%
+    );
+    border-color: rgb(253 230 138 / var(--tw-border-opacity));
+    padding: 1rem;
+  }
+}
+
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -23,7 +37,7 @@ body {
 }
 
 button {
-  border-radius: 7px; 
+  border-radius: 7px;
   border: 0.5px solid transparent;
   padding: 0.5em 1em;
   font-size: 1em;
@@ -44,6 +58,3 @@ button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
-
-
-

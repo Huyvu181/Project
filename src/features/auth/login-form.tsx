@@ -10,7 +10,19 @@ type LoginFormProps = {
 
 export const LoginForm = ({ onSuccess }: LoginFormProps) => {
 	// const login = useLogin({ onSuccess, onError: (e) => { console.log('on error', e) } });
-	const login = useLogin({ onSuccess });
+	const login = useLogin({
+		onSuccess: (userData) => {
+			console.log('Logged in successfully:', userData);
+			localStorage.setItem('token', userData.token);
+			localStorage.setItem('user', JSON.stringify(userData.user));
+
+			onSuccess();
+		},
+		onError: (error) => {
+			console.error('Login error:', error);
+		},
+	});
+
 	const [searchParams] = useSearchParams();
 	const redirectTo = searchParams.get('redirectTo');
 	const navigate = useNavigate();
